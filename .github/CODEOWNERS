@@ -1,0 +1,30 @@
+# CODEOWNERS — last match wins per file.
+#
+# IMPORTANT: every handle below MUST be a real GitHub username or team
+# (`@org/team`) with write access. GitHub silently ignores unknown handles,
+# which disables branch-protection "Require review from CODEOWNERS".
+# Replace `@OWNER` with the verified owner(s) before relying on this file.
+
+# Default
+*                               @OWNER
+
+# Principle docs
+/AGENTS.md                      @OWNER
+/CLAUDE.md                      @OWNER
+/.github/                       @OWNER
+
+# Product & decisions
+/docs/product/                  @OWNER
+/docs/adr/                      @OWNER
+/docs/rfc/                      @OWNER
+/docs/runbooks/                 @OWNER
+
+# Shared packages
+/packages/                      @OWNER
+
+# Services
+/services/                      @OWNER
+
+# Infra
+/infra/                         @OWNER
+/infra/envs/prod/               @OWNER

@@ -1,0 +1,51 @@
+# Toolchain-agnostic baseline. Extend per chosen stack
+# (e.g. Node, .NET, Python, Go) after running step 3 of README.
+
+# Secrets / local env
+.env
+.env.*
+!.env.example
+
+# Claude Code local settings (personal, not shared)
+.claude/settings.local.json
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+*.swp
+*~
+
+# Build / dependency output (generic — refine per toolchain)
+dist/
+build/
+out/
+coverage/
+node_modules/
+
+# Test / lint / type cache (generic — refine per toolchain)
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.tox/
+.nox/
+.cache/
+.turbo/
+.nx/
+__pycache__/
+*.pyc
+
+# Local eval / sandbox workspaces — ignored by default
+*-eval/
+eval-workspace/
+
+# Claude session lock (created at runtime, not shared)
+.claude/scheduled_tasks.lock

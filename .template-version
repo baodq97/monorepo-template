@@ -1,0 +1,8 @@
+template: monorepo-template
+version: 2026.05.18
+upstream: https://github.com/<template-source>   # TODO: fill on publication
+last_synced: 2026-05-18                          # update on each rebase from upstream
+
+# When a downstream project rebases from the template, bump `last_synced` to
+# the date of the rebase. `scripts/audit.{sh,ps1}` reports this so maintainers
+# can spot drift from the upstream.

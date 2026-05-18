@@ -1,0 +1,9 @@
+This file marks the repo as an un-bootstrapped template.
+
+While present:
+  - scripts/verify.{sh,ps1} skips placeholder checks (`@OWNER`, `<project>`).
+  - Agents working ON the template itself (not IN a downstream project)
+    will not be falsely blocked by those checks.
+
+scripts/bootstrap.{sh,ps1} deletes this file as its final step.
+DO NOT delete it manually — run bootstrap instead.

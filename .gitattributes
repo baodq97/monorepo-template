@@ -1,0 +1,13 @@
+# Normalize line endings on checkin; check out LF on every OS.
+# Prevents CRLF leaking into bash scripts (e.g. .github/workflows/*.yml).
+* text=auto eol=lf
+
+# Binary types — never touch.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.gz binary
