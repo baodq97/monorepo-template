@@ -104,10 +104,7 @@ check_index_status() {
     case "$(basename "$f")" in
       _TEMPLATE.md|INDEX.md) continue ;;
     esac
-    # tr -d '\r' — CRLF-tolerant: on Windows-checked-out files, awk leaves a
-    # trailing \r that breaks `grep -F "$id" "$index"` because INDEX rows have
-    # the id followed by " | ", not "\r". Without this, every Windows run
-    # spuriously reports "no row for <id>". See template ADR/G7 history.
+    # CRLF-tolerant — strip \r so `grep -F "$id"` matches INDEX rows on Windows.
     id=$(awk -F': *' '/^id:/{print $2; exit}' "$f" | tr -d '\r')
     fm_status=$(awk -F': *' '/^status:/{print $2; exit}' "$f" | awk '{print $1}' | tr -d '\r')
     fm_owner=$(awk -F': *' '/^owner:/{print $2; exit}' "$f" | awk '{print $1}' | tr -d '\r')
