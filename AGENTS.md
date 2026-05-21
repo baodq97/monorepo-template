@@ -30,6 +30,7 @@ Optional patterns (adopt when their conditions are met) live in [`docs/patterns/
 - [`refactoring.md`](./docs/patterns/refactoring.md) — numeric LoC thresholds for PR-review triggers.
 - [`modules.md`](./docs/patterns/modules.md) — sellable bounded contexts inside one host.
 - [`agent-halt-document.md`](./docs/patterns/agent-halt-document.md) — `.pr/<branch>.md` blocker-note convention for non-interactive agent runs (CI / eval / batch).
+- [`autonomous-ceiling-handoff.md`](./docs/patterns/autonomous-ceiling-handoff.md) — `docs/product/<name>-status.md` handoff doc when a multi-PR agent burst reaches its autonomous ceiling.
 - [`user-story-backlog.md`](./docs/patterns/user-story-backlog.md) — `docs/issues/US-NNN-*.md` prioritized backlog (P0/P1/P2 + `blocks:`) for multi-implementor or budget-bounded agent work.
 
 ## Commands
