@@ -1,0 +1,103 @@
+name: Agent task
+description: Structured implementation brief for a coding agent (see docs/patterns/agent-task-contract.md)
+title: "[agent-task] <short outcome>"
+labels: ["agent-task"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Fill every section. Empty sections weaken the contract.
+        Repo rules in `AGENTS.md` always override this contract.
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: One sentence. The outcome, not the steps.
+      placeholder: e.g. "Surface invoice export count on the billing dashboard."
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Background the agent needs but cannot infer from the repo.
+    validations:
+      required: true
+
+  - type: textarea
+    id: allowed_paths
+    attributes:
+      label: Allowed paths
+      description: Globs. The agent may modify only files matching these.
+      placeholder: |
+        services/billing/**
+        packages/ui/**
+    validations:
+      required: true
+
+  - type: textarea
+    id: forbidden_paths
+    attributes:
+      label: Forbidden paths
+      description: Globs the agent must not modify even if tempted.
+      placeholder: |
+        infra/envs/prod/**
+        docs/adr/**
+    validations:
+      required: true
+
+  - type: textarea
+    id: must_read
+    attributes:
+      label: Must-read docs
+      description: Ordered list. AGENTS.md, domain docs, ADRs, known-traps entries.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Observable, verifiable. Each item is yes/no.
+    validations:
+      required: true
+
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation commands
+      description: Exact commands the agent must run before claiming done.
+      placeholder: |
+        bash scripts/verify.sh
+        <lint>
+        <typecheck>
+        <test>
+    validations:
+      required: true
+
+  - type: textarea
+    id: stop
+    attributes:
+      label: Stop conditions
+      description: When the agent must halt and ask the user.
+      value: |
+        - Required artifact (PRD/RFC/ADR) missing for the change class.
+        - Area is `plan-only` or `forbidden` in `docs/ownership-map.md`.
+        - A `docs/known-traps.md` entry applies.
+        - Forbidden path would need to be touched.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Risk level
+      options:
+        - low
+        - medium
+        - high
+        - critical
+    validations:
+      required: true

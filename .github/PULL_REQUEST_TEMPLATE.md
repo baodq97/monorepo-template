@@ -40,3 +40,30 @@ sections (still tick "Read nearest AGENTS.md" and "Ran verify locally").
 
 ## Risk & rollback
 <!-- How does this fail? How to revert (commit / flag / IaC rollback)? -->
+
+## Knowledge checked
+<!-- Required for behavior changes. Be specific (paths + ids). -->
+- Nearest AGENTS.md:
+- Context map entries:
+- Domain docs:
+- ADR/RFC/PRD:
+- Known traps:
+- Ownership map:
+
+## Agent assumptions
+<!-- One bullet per assumption. -->
+- Assumption:
+- Why it is safe:
+- What would invalidate it:
+
+## Validation evidence
+<!-- Exact commands + exact results. No "tests pass" without output. -->
+- Command:
+- Result:
+- Untested areas:
+
+## Risk classification
+- [ ] low
+- [ ] medium
+- [ ] high
+- [ ] critical

@@ -125,6 +125,48 @@ Run before declaring done. Halt at the first ✗ and surface it to the user.
 
 Sub-tree `AGENTS.md` may extend this list with deltas.
 
+## Product knowledge for agents
+
+Before modifying behavior, agents must check, in order:
+
+1. Nearest `AGENTS.md`.
+2. `.agent/context-map.yml` (if present) — route the touched paths to
+   their must-read docs and risk level.
+3. Related `docs/domain/*` entries.
+4. Related ADR / RFC / PRD.
+5. `docs/known-traps.md`.
+6. `docs/ownership-map.md`.
+
+If no domain rule exists for a behavior change, **do not guess**. Either:
+
+- halt and ask the user, or
+- create a draft domain-gap note (`docs/domain/DOMAIN-NNNN-*.md`,
+  `status: draft`, `owner: TBD`) describing the assumption and why.
+
+If `docs/ownership-map.md` marks the area as:
+
+- `implement` — proceed with normal checks.
+- `guarded` — cite the required docs and tests in the PR body.
+- `plan-only` — produce a plan, not code, unless explicitly approved.
+- `forbidden` — do not edit; surface to the user.
+
+## Agent task contract
+
+For agent-assigned implementation work, prefer a task contract (see
+[`docs/patterns/agent-task-contract.md`](./docs/patterns/agent-task-contract.md))
+containing:
+
+- Goal
+- Allowed paths
+- Forbidden paths
+- Must-read docs
+- Acceptance criteria
+- Validation commands
+- Stop conditions
+
+If the task scope conflicts with repo rules, **repo rules win** unless
+the user explicitly overrides.
+
 ## Coding rules
 
 - Match neighboring style. Mimic before invent.

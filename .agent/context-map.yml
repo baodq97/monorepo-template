@@ -1,0 +1,168 @@
+# Context map — touched paths → must-read docs + risk + autonomy.
+#
+# Consumed by agents (and future harness/CI tooling) to decide which docs
+# an agent must load before editing a path. Authoritative rules still live
+# in AGENTS.md; this file is the machine-readable index.
+#
+# Lookup rule for callers: the MOST SPECIFIC matching glob wins for `risk`
+# and `autonomy`; `must_read` lists from all matching globs are unioned.
+# Optional keys per route:
+#   - must_read         : ordered list of files to load before editing
+#   - risk              : low | medium | high | critical
+#   - autonomy          : implement | guarded | plan-only | forbidden
+#   - required_artifact : PRD | RFC | ADR (gate per AGENTS.md § Lifecycle)
+#   - notes             : free-text hint
+
+version: 1
+
+routes:
+
+  # ---- High-level subtrees --------------------------------------------------
+
+  "docs/domain/**":
+    must_read:
+      - docs/AGENTS.md
+      - docs/domain/AGENTS.md
+    risk: medium
+    autonomy: guarded
+
+  "services/**":
+    must_read:
+      - AGENTS.md
+      - services/AGENTS.md
+      - docs/known-traps.md
+      - docs/ownership-map.md
+    risk: high
+    autonomy: guarded
+
+  "packages/**":
+    must_read:
+      - AGENTS.md
+      - packages/AGENTS.md
+      - docs/ownership-map.md
+    risk: high
+    autonomy: guarded
+
+  "apps/**":
+    must_read:
+      - AGENTS.md
+      - apps/AGENTS.md
+      - docs/ownership-map.md
+    risk: medium
+    autonomy: guarded
+
+  "infra/envs/prod/**":
+    must_read:
+      - AGENTS.md
+      - docs/adr/INDEX.md
+    risk: critical
+    autonomy: plan-only
+    required_artifact: ADR
+
+  # ---- Restricted single files / dirs --------------------------------------
+  # Mirrors `.agent/permissions.yml` § files.restricted. Editing these is
+  # not forbidden, but requires explicit user authorization per the rule
+  # cited in `notes`.
+
+  "AGENTS.md":
+    must_read:
+      - AGENTS.md
+    risk: critical
+    autonomy: plan-only
+    notes: |
+      Root AGENTS.md edits ship in a standalone PR; principle changes
+      require an ADR (see AGENTS.md § Editing this file).
+
+  ".github/CODEOWNERS":
+    must_read:
+      - AGENTS.md
+    risk: high
+    autonomy: guarded
+    notes: |
+      Adding an entry for a NEW path the same PR creates is allowed
+      (use `@TBD` if no owner exists). Modifying or removing an
+      existing entry requires explicit user instruction.
+
+  ".github/PULL_REQUEST_TEMPLATE.md":
+    must_read:
+      - AGENTS.md
+      - .github/PULL_REQUEST_TEMPLATE.md
+    risk: high
+    autonomy: plan-only
+    notes: |
+      Changing the PR template changes every future PR. Treat as a
+      governance change; propose first.
+
+  "docs/adr/**":
+    must_read:
+      - AGENTS.md
+      - docs/AGENTS.md
+      - docs/adr/INDEX.md
+    risk: critical
+    autonomy: plan-only
+    required_artifact: ADR
+    notes: |
+      Drafts may be created with status: proposed and owner: TBD.
+      Status flips remain a human doc-owner act.
+
+  "docs/rfc/**":
+    must_read:
+      - AGENTS.md
+      - docs/AGENTS.md
+      - docs/rfc/INDEX.md
+    risk: high
+    autonomy: guarded
+    required_artifact: RFC
+
+  "docs/product/**":
+    must_read:
+      - AGENTS.md
+      - docs/AGENTS.md
+      - docs/product/INDEX.md
+    risk: critical
+    autonomy: plan-only
+    required_artifact: PRD
+
+  "docs/known-traps.md":
+    must_read:
+      - AGENTS.md
+      - docs/known-traps.md
+    risk: high
+    autonomy: guarded
+    notes: |
+      Adding a new KT-NNNN entry is normal authoring. Removing or
+      relaxing an existing trap requires explicit user instruction.
+
+  "docs/ownership-map.md":
+    must_read:
+      - AGENTS.md
+      - docs/ownership-map.md
+    risk: high
+    autonomy: guarded
+    notes: |
+      Owner names and autonomy levels are human-curated. Agents may
+      add a new row for a new area; do not relax an existing row's
+      autonomy without explicit user instruction.
+
+  # ---- Worked-example domain routes ----------------------------------------
+  # Subtree routes for the seed domain docs. Most specific wins, so a
+  # change under services/<x>/billing/** picks up pricing must-reads in
+  # addition to the services/** ones (union of must_read).
+
+  "services/**/billing/**":
+    must_read:
+      - services/AGENTS.md
+      - docs/domain/pricing-rules.md
+      - docs/ownership-map.md
+      - docs/known-traps.md
+    risk: critical
+    autonomy: plan-only
+
+  "services/**/auth/**":
+    must_read:
+      - services/AGENTS.md
+      - docs/domain/permission-model.md
+      - docs/ownership-map.md
+      - docs/known-traps.md
+    risk: critical
+    autonomy: plan-only
