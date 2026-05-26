@@ -95,7 +95,7 @@ Need explicit driver/input/output per stage (multi-team coordination, regulated,
 
 ## Workflow per task
 
-1. **Understand** — read nearest `AGENTS.md` + existing tests.
+1. **Understand** — read nearest `AGENTS.md` + existing tests + follow [§ Product knowledge](#product-knowledge-for-agents) checklist.
 2. **Plan** — outline; if above threshold (§ Lifecycle), halt.
 3. **Implement** — match neighbor file conventions.
 4. **Regenerate** — `<codegen>` if schema/proto/openapi changed.
@@ -114,7 +114,7 @@ Run before declaring done. Halt at the first ✗ and surface it to the user.
 - [ ] **Toolchain picked** → ran `<lint>` + `<typecheck>` + scoped `<test>` locally; all pass.
 - [ ] **Production-parity test** present — *applies to changes in `services/<x>/src/**` and `apps/<x>/src/**` only*. Same artifact `<run>` launches, hit through the public interface, asserts a documented happy-path. Libraries: import and exercise the public API as a consumer. Doc-only / config-only PRs: N/A. Rule + failure patterns: [`services/AGENTS.md` § Test](./services/AGENTS.md#test).
 - [ ] **Toolchain not yet picked** → did not execute speculative commands; proposed concrete commands in PR description for the user to verify.
-- [ ] Touched `docs/{adr,rfc,product,issues,postmortems,runbooks}/` → `INDEX.md` updated, front-matter complete, **`status:` column in INDEX.md matches each doc's front-matter `status:`** (stale INDEX = rule violation). **Pick `status:` from the per-type lifecycle in [`docs/AGENTS.md` § Lifecycle](./docs/AGENTS.md#lifecycle)** — PRDs start at `draft` (not `proposed`), ADRs start at `proposed`, US start at `open`, etc. Per-type templates carry inline comments showing the valid set.
+- [ ] Touched `docs/{adr,rfc,product,issues,postmortems,runbooks,domain}/` → `INDEX.md` updated, front-matter complete, **`status:` column in INDEX.md matches each doc's front-matter `status:`** (stale INDEX = rule violation). **Pick `status:` from the per-type lifecycle in [`docs/AGENTS.md` § Lifecycle](./docs/AGENTS.md#lifecycle)** — PRDs start at `draft` (not `proposed`), ADRs start at `proposed`, US start at `open`, etc. Per-type templates carry inline comments showing the valid set.
 - [ ] Touched schema/proto/openapi → ran codegen, committed generated output.
 - [ ] No new dependency without RFC or PR note.
 - [ ] No `.env*`, secret, key, or `.local.*` committed (`git status` verified).
@@ -124,6 +124,48 @@ Run before declaring done. Halt at the first ✗ and surface it to the user.
 - [ ] CODEOWNERS — added entry only for **new** paths this PR creates (with `@TBD` if no owner yet); did not modify existing entries.
 
 Sub-tree `AGENTS.md` may extend this list with deltas.
+
+## Product knowledge for agents
+
+Before modifying behavior, agents must check, in order:
+
+1. Nearest `AGENTS.md`.
+2. `.agent/context-map.yml` (if present) — route the touched paths to
+   their must-read docs and risk level.
+3. Related `docs/domain/*` entries.
+4. Related ADR / RFC / PRD.
+5. `docs/known-traps.md`.
+6. `docs/ownership-map.md`.
+
+If no domain rule exists for a behavior change, **do not guess**. Either:
+
+- halt and ask the user, or
+- create a draft domain-gap note (`docs/domain/DOMAIN-NNNN-*.md`,
+  `status: draft`, `owner: TBD`) describing the assumption and why.
+
+If `docs/ownership-map.md` marks the area as:
+
+- `implement` — proceed with normal checks.
+- `guarded` — cite the required docs and tests in the PR body.
+- `plan-only` — produce a plan, not code, unless explicitly approved.
+- `forbidden` — do not edit; surface to the user.
+
+## Agent task contract
+
+For agent-assigned implementation work, prefer a task contract (see
+[`docs/patterns/agent-task-contract.md`](./docs/patterns/agent-task-contract.md))
+containing:
+
+- Goal
+- Allowed paths
+- Forbidden paths
+- Must-read docs
+- Acceptance criteria
+- Validation commands
+- Stop conditions
+
+If the task scope conflicts with repo rules, **repo rules win** unless
+the user explicitly overrides.
 
 ## Coding rules
 

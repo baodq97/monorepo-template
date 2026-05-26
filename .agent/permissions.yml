@@ -1,0 +1,39 @@
+# Agent permissions — machine-readable mirror of the rules in AGENTS.md
+# § Agent constraints. Authoritative rules live in AGENTS.md; this file is
+# what harnesses / CI / pre-PR linters can parse.
+
+version: 1
+
+agent_permissions:
+  git:
+    commit: true
+    push_branch: true
+    merge: false
+
+  github:
+    create_pr: true
+    approve_pr: false
+    merge_pr: false
+    edit_codeowners: restricted   # add entry for NEW path only; never modify existing
+
+  docs:
+    create_draft_docs: true
+    self_flip_status: false
+    self_assign_owner: false
+
+  files:
+    deny:
+      - "**/.env"
+      - "**/.env.*"
+    deny_exceptions:
+      - "**/.env.example"
+    restricted:
+      - ".github/CODEOWNERS"
+      - ".github/PULL_REQUEST_TEMPLATE.md"
+      - "AGENTS.md"
+      - "docs/adr/**"
+      - "docs/product/**"
+      - "docs/rfc/**"
+      - "docs/known-traps.md"
+      - "docs/ownership-map.md"
+      - "infra/envs/prod/**"
