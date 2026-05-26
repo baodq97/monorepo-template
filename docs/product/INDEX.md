@@ -1,5 +1,4 @@
 # Product Index
 
-| ID | Title | Status | Owner | Date |
-|----|-------|--------|-------|------|
-| _empty_ | | | | |
+| Id | Title | Status | Owner | Date |
+|---|---|---|---|---|

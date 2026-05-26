@@ -44,12 +44,12 @@ When an autonomous burst reaches its ceiling, the final act of the session is:
    ```
 
 3. **Set `status: blocked`** in front-matter.
-4. **Update `docs/product/INDEX.md`** to match (or run `scripts/rebuild-indexes.py`).
+4. **Update `docs/product/INDEX.md`** to match (or run `scripts/rebuild-indexes.sh`).
 5. **Exit cleanly.** Do not open more PRs after this artifact lands.
 
 ## Why integrate with `docs/product/`
 
-- **Discoverability**: `docs/product/INDEX.md` is the catalog already maintained by `scripts/rebuild-indexes.py`.
+- **Discoverability**: `docs/product/INDEX.md` is the catalog already maintained by `scripts/rebuild-indexes.sh`.
 - **Governance consistency**: front-matter `owner:` and `status:` integrate with the existing self-flip prohibition and `verify.sh` checks. No parallel state machine.
 - **Lifecycle alignment**: the handoff is a product-level artifact, not a PR-level one.
 

@@ -1,6 +1,7 @@
 ---
 id: DOMAIN-0000
 title: <Domain rule title>
+risk: High              # High | Critical
 status: draft
 owner: TBD
 date: YYYY-MM-DD

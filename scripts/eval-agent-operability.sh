@@ -192,7 +192,7 @@ require_grep "AGENTS.md" ".agent/context-map.yml"
 require_file "docs/patterns/agent-task-contract.md"
 require_file ".github/ISSUE_TEMPLATE/agent-task.yml"
 require_exec "scripts/validate-pr-body.sh"
-require_file "scripts/validate-pr-body.ps1"
+require_file "scripts/validate-pr-body.sh"
 
 echo
 if [ "$fail" -ne 0 ]; then

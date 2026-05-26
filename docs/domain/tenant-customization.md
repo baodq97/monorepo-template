@@ -1,6 +1,7 @@
 ---
 id: DOMAIN-0001
 title: Tenant customization
+risk: High
 status: draft
 owner: TBD
 date: 2026-05-26
@@ -10,8 +11,6 @@ related_adrs: []
 ---
 
 # Tenant customization
-
-Risk: **High**
 
 ## Purpose
 

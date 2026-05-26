@@ -40,6 +40,6 @@ contributors share the repo).
 ## What's already enforced
 
 - `.gitignore` excludes `.env*` (except `.env.example`).
-- `scripts/verify.{sh,ps1}` fails the build if a `.env*` file is committed.
+- `scripts/verify.sh` fails the build if a `.env*` file is committed.
 - `infra/AGENTS.md` forbids secrets in IaC; references must point to a
   secret manager (Vault / SSM / KMS).

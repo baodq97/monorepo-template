@@ -76,10 +76,16 @@ fi
 
 # Mirror the ADR-0001 owner into the ADR INDEX row (keeps verify happy).
 ADR_INDEX="docs/adr/INDEX.md"
-if [ -f "$ADR_INDEX" ] && grep -q 'ADR-0001' "$ADR_INDEX" && grep -q '| TBD | 2026-05-16 |' "$ADR_INDEX"; then
-  esc=$(printf '%s' "$OWNER" | sed 's/[\/&]/\\&/g')
-  sedi "s/| TBD | 2026-05-16 |/| ${esc} | 2026-05-16 |/" "$ADR_INDEX"
-  echo "✓ patched $ADR_INDEX (ADR-0001 owner row)"
+if [ -f "$ADR_INDEX" ] && grep -q 'ADR-0001' "$ADR_INDEX"; then
+  # Parse date from ADR-0001 front-matter instead of hardcoding.
+  adr1_date=$(awk -F': *' '/^date:/{print $2; exit}' "$ADR1" | tr -d '[:space:]')
+  if [ -n "$adr1_date" ] && grep -qF "| TBD | $adr1_date |" "$ADR_INDEX"; then
+    esc=$(printf '%s' "$OWNER" | sed 's/[\/&]/\\&/g')
+    sedi "s/| TBD | ${adr1_date} |/| ${esc} | ${adr1_date} |/" "$ADR_INDEX"
+    echo "✓ patched $ADR_INDEX (ADR-0001 owner row)"
+  else
+    echo "· $ADR_INDEX: ADR-0001 owner already set or date mismatch"
+  fi
 fi
 
 if [ -f .template-unbootstrapped ]; then
