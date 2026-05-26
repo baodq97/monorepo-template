@@ -43,6 +43,10 @@ related_adrs: []
 
 <!-- The category of test (unit / contract / e2e) that guards each invariant. -->
 
+## Agent autonomy
+
+<!-- One of: implement | guarded | plan-only | forbidden. See ownership-map.md. -->
+
 ## Related docs
 
 <!-- Links to PRDs, RFCs, ADRs, known traps. -->

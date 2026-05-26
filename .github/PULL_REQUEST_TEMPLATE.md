@@ -51,7 +51,11 @@ sections (still tick "Read nearest AGENTS.md" and "Ran verify locally").
 - Ownership map:
 
 ## Agent assumptions
-<!-- One bullet per assumption. -->
+<!--
+  One bullet per assumption. Use "Assumption: None" when no domain invariant
+  is relied upon. Value MUST appear on the same line as the label — the
+  validation script rejects labels whose value is on the next line.
+-->
 - Assumption:
 - Why it is safe:
 - What would invalidate it:

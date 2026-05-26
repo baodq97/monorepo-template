@@ -17,6 +17,14 @@ in the right places, and produce verifiable PRs?
 - `scripts/eval-agent-operability.sh` (top-level) — static verifier that
   the eval layer and its dependencies exist.
 
+## Task file structure
+
+All task files follow the same format: **Prompt** (the user request to hand
+to the agent), **What we score**, **Expected baseline** (old template),
+**Expected candidate** (new template), **Target candidate score**. Keep this
+structure when adding new tasks — it allows future parametric runners to parse
+them uniformly.
+
 ## How to run an eval
 
 The runner (`scripts/eval-agent-operability.sh`) is a static check; it does

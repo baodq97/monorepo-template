@@ -95,7 +95,7 @@ Need explicit driver/input/output per stage (multi-team coordination, regulated,
 
 ## Workflow per task
 
-1. **Understand** — read nearest `AGENTS.md` + existing tests.
+1. **Understand** — read nearest `AGENTS.md` + existing tests + follow [§ Product knowledge](#product-knowledge-for-agents) checklist.
 2. **Plan** — outline; if above threshold (§ Lifecycle), halt.
 3. **Implement** — match neighbor file conventions.
 4. **Regenerate** — `<codegen>` if schema/proto/openapi changed.

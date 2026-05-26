@@ -78,6 +78,12 @@ Forbidden: see above.
   known tenant slugs.
 - Contract tests for each `*Adapter` interface.
 
+## Agent autonomy
+
+`guarded`. Agents may implement tenant-customization changes through declared
+boundaries (config, flags, adapters), but must cite the invariants and boundary
+lint tests in the PR body.
+
 ## Related docs
 
 - `docs/known-traps.md` → KT-0001
