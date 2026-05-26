@@ -16,7 +16,7 @@ the *decision* gate before code is written.
 | `plan-only` | Produce a plan / proposal, not code, unless explicitly approved. |
 | `forbidden` | Do not edit. Halt and surface to the user. |
 
-A level higher up the table includes everything below it. When in doubt,
+Each level is more restrictive than the one above it. When in doubt,
 classify up.
 
 ## Map

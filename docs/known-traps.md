@@ -28,6 +28,7 @@ Format per entry:
   in core packages).
 - **Related docs:**
   - `docs/domain/tenant-customization.md`
+  - `docs/domain/pricing-rules.md`
 
 ## KT-0002: UI-only permission checks
 

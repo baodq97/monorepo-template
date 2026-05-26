@@ -46,7 +46,9 @@ changed_text=$(tr -d '\r' < "$changed")
 # Section presence — header must appear in body.
 section_present() {
   local header="$1"
-  printf '%s\n' "$body_text" | grep -qE "^[[:space:]]*#{1,6}[[:space:]]+${header}[[:space:]]*$"
+  local esc
+  esc=$(printf '%s' "$header" | sed 's/[][\\.*^$(){}?+|/]/\\\\&/g')
+  printf '%s\n' "$body_text" | grep -qE "^[[:space:]]*#{1,6}[[:space:]]+${esc}[[:space:]]*$"
 }
 
 # Field has a non-empty, non-placeholder value.
@@ -57,7 +59,7 @@ field_has_value() {
   local label="$1"
   # Escape regex metachars in label.
   local esc
-  esc=$(printf '%s' "$label" | sed 's/[][\.*^$(){}?+|/]/\\&/g')
+  esc=$(printf '%s' "$label" | sed 's/[][\\.*^$(){}?+|/]/\\\\&/g')
   printf '%s\n' "$body_text" \
     | grep -qE "^[[:space:]]*([-*][[:space:]]+)?${esc}:[[:space:]]+[^[:space:]<].*"
 }
@@ -142,7 +144,7 @@ fi
 mention_has_value() {
   local needle="$1"
   printf '%s\n' "$body_text" \
-    | grep -qE ":[[:space:]]*[^[:space:]<][^#]*${needle}"
+    | grep -qE ":[[:space:]].*${needle}"
 }
 
 if paths_match '(^|/)services/'; then

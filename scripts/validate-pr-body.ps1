@@ -26,8 +26,10 @@ function Note-Err($m) { Write-Host "[FAIL] $m"; $script:fail = 1 }
 if (-not (Test-Path -LiteralPath $BodyFile))   { Note-Err "PR body file not found: $BodyFile";        exit 1 }
 if (-not (Test-Path -LiteralPath $ChangedFile)){ Note-Err "Changed-files file not found: $ChangedFile"; exit 1 }
 
-$bodyText    = (Get-Content -LiteralPath $BodyFile    -Raw) -replace "`r",""
-$changedText = (Get-Content -LiteralPath $ChangedFile -Raw) -replace "`r",""
+$bodyText    = [string]((Get-Content -LiteralPath $BodyFile    -Raw) -replace "`r","")
+$changedText = [string]((Get-Content -LiteralPath $ChangedFile -Raw) -replace "`r","")
+if ($null -eq $bodyText)    { $bodyText    = '' }
+if ($null -eq $changedText) { $changedText = '' }
 
 function Section-Present([string]$Header) {
   $esc = [regex]::Escape($Header)
@@ -50,7 +52,8 @@ function Mention-HasValue([string]$Needle) {
   # Needle appears AFTER a colon on the SAME line as the label — i.e. as
   # a filled value, not on the next line where another field happens to
   # contain the substring.
-  return [regex]::IsMatch($bodyText, "(?m):[ \t]*[^ \t<\r\n][^\r\n]*$Needle")
+  $escNeedle = [regex]::Escape($Needle)
+  return [regex]::IsMatch($bodyText, "(?m):[ \t].*$escNeedle")
 }
 
 # 1. Required sections.
@@ -83,7 +86,7 @@ if (Section-Present 'Validation evidence') {
 
 # 5. Risk classification.
 if (Section-Present 'Risk classification') {
-  if ([regex]::IsMatch($bodyText, '(?m)^\s*-\s+\[[xX]\]\s+(low|medium|high|critical)\b')) {
+  if ([regex]::IsMatch($bodyText, '(?m)^[ \t]*-[ \t]+\[[xX]\][ \t]+(low|medium|high|critical)\b')) {
     Note-Ok "Risk classification: a level is checked."
   } else {
     Note-Err "Risk classification: no level is checked."
@@ -92,15 +95,15 @@ if (Section-Present 'Risk classification') {
 
 # 6. Path-specific citations.
 if (Paths-Match '(^|/)services/') {
-  if (Mention-HasValue 'services/AGENTS\.md') { Note-Ok  "services/** touched → PR body cites services/AGENTS.md as a value." }
+  if (Mention-HasValue 'services/AGENTS.md') { Note-Ok  "services/** touched → PR body cites services/AGENTS.md as a value." }
   else                                          { Note-Err "services/** touched but PR body does not cite services/AGENTS.md as a filled value." }
 }
 if (Paths-Match '(^|/)packages/') {
-  if (Mention-HasValue 'packages/AGENTS\.md') { Note-Ok  "packages/** touched → PR body cites packages/AGENTS.md as a value." }
+  if (Mention-HasValue 'packages/AGENTS.md') { Note-Ok  "packages/** touched → PR body cites packages/AGENTS.md as a value." }
   else                                          { Note-Err "packages/** touched but PR body does not cite packages/AGENTS.md as a filled value." }
 }
 if (Paths-Match '(^|/)docs/domain/') {
-  if (Mention-HasValue 'docs/domain/AGENTS\.md') { Note-Ok  "docs/domain/** touched → PR body cites docs/domain/AGENTS.md as a value." }
+  if (Mention-HasValue 'docs/domain/AGENTS.md') { Note-Ok  "docs/domain/** touched → PR body cites docs/domain/AGENTS.md as a value." }
   else                                            { Note-Err "docs/domain/** touched but PR body does not cite docs/domain/AGENTS.md as a filled value." }
 }
 if (Paths-Match '(^|/)infra/envs/prod/') {

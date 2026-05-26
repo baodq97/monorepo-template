@@ -75,7 +75,7 @@ require_file ".agent/evals/reports/candidate-after-change.md"
 # 2. At least 5 eval task files, each with required sections.
 # ---------------------------------------------------------------------------
 require_dir ".agent/evals/tasks"
-task_count=$(find .agent/evals/tasks -maxdepth 1 -type f -name 'EVAL-*.md' 2>/dev/null | wc -l | tr -d ' ')
+task_count=$(find .agent/evals/tasks -maxdepth 1 -type f -name 'EVAL-*.md' 2>/dev/null | wc -l | tr -d ' ' || echo 0)
 if [ "$task_count" -ge 5 ]; then
   ok "eval tasks present: $task_count (>= 5)"
 else

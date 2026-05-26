@@ -87,5 +87,5 @@ the PR.
 
 ## Related docs
 
-- `docs/known-traps.md`
+- `docs/known-traps.md` → KT-0001
 - `docs/ownership-map.md`

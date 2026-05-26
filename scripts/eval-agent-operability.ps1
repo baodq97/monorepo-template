@@ -30,7 +30,9 @@ function Require-Dir($path) {
   else { Note-Err "missing dir: $path" }
 }
 function Read-NormalisedText($path) {
-  return (Get-Content -LiteralPath $path -Raw) -replace "`r",""
+  $raw = (Get-Content -LiteralPath $path -Raw)
+  if ($null -eq $raw) { return '' }
+  return $raw -replace "`r",""
 }
 function Require-Grep($file, $needle) {
   if (-not (Test-Path -LiteralPath $file -PathType Leaf)) { Note-Err "cannot grep (missing file): $file"; return }
@@ -130,7 +132,7 @@ Require-Grep "AGENTS.md" ".agent/context-map.yml"
 # 10. Patterns + issue template + PR-body validator scripts.
 Require-File "docs/patterns/agent-task-contract.md"
 Require-File ".github/ISSUE_TEMPLATE/agent-task.yml"
-Require-File "scripts/validate-pr-body.sh"
+Require-File "scripts/validate-pr-body.sh"   # exec bit check not applicable on Windows
 Require-File "scripts/validate-pr-body.ps1"
 
 Write-Host ""
