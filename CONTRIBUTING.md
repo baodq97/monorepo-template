@@ -19,16 +19,9 @@ bash scripts/bootstrap.sh <project-name> '@owner'
 bash scripts/verify.sh
 ```
 
-PowerShell equivalents:
-
-```powershell
-pwsh scripts/bootstrap.ps1 -Project <project-name> -Owner '@owner'
-pwsh scripts/verify.ps1
-```
-
 ## Quarterly audit
 
-Run `bash scripts/audit.sh` (or `pwsh scripts/audit.ps1`) every quarter. It is
+Run `bash scripts/audit.sh` every quarter. It is
 read-only and reports:
 
 - ADR/RFC stuck in `proposed` for >90 days.

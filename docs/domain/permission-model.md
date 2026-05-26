@@ -1,6 +1,7 @@
 ---
 id: DOMAIN-0003
 title: Permission model
+risk: Critical
 status: draft
 owner: TBD
 date: 2026-05-26
@@ -10,8 +11,6 @@ related_adrs: []
 ---
 
 # Permission model
-
-Risk: **Critical** (authorization and tenant isolation)
 
 ## Purpose
 

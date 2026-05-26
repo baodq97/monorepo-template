@@ -25,7 +25,7 @@ sections (still tick "Read nearest AGENTS.md" and "Ran verify locally").
 
 ## Checks
 - [ ] Read nearest `AGENTS.md`
-- [ ] Ran `scripts/verify.{sh,ps1}` locally; output clean
+- [ ] Ran `scripts/verify.sh` locally; output clean
 - [ ] Touched `packages/` shared → version bumped per chosen tool
 - [ ] Touched `services/<x>` public API → SDK bumped
 - [ ] Touched `infra/envs/prod/**` → ADR linked + `plan` pasted below

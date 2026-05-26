@@ -1,6 +1,7 @@
 ---
 id: DOMAIN-0002
 title: Pricing rules
+risk: Critical
 status: draft
 owner: TBD
 date: 2026-05-26
@@ -10,8 +11,6 @@ related_adrs: []
 ---
 
 # Pricing rules
-
-Risk: **Critical**
 
 ## Purpose
 

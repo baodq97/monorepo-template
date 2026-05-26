@@ -47,6 +47,14 @@ if [ "$UNBOOTSTRAPPED" -eq 0 ]; then
   else
     ok "No '<project>' placeholder in tracked files."
   fi
+  tmpl_hits=$(git ls-files -z | xargs -0 grep -lE '<template-source>' 2>/dev/null \
+    | grep -vE "$exclude" || true)
+  if [ -n "$tmpl_hits" ]; then
+    err "Files still contain '<template-source>' placeholder:"
+    printf '    %s\n' $tmpl_hits
+  else
+    ok "No '<template-source>' placeholder in tracked files."
+  fi
 fi
 
 # ---------------------------------------------------------------------------
@@ -72,7 +80,7 @@ check_frontmatter() {
   [ -d "$dir" ] || return 0
   while IFS= read -r f; do
     case "$(basename "$f")" in
-      _TEMPLATE.md|INDEX.md) continue ;;
+      _TEMPLATE.md|INDEX.md|AGENTS.md|README.md) continue ;;
     esac
     # CRLF-tolerant: strip \r before pattern-matching the `---` delimiter,
     # otherwise Windows-checked-out docs (line ending `---\r`) silently fail
@@ -85,12 +93,13 @@ check_frontmatter() {
     done
   done < <(find "$dir" -maxdepth 1 -name '*.md' -type f 2>/dev/null)
 }
-check_frontmatter docs/adr        id title status owner date
-check_frontmatter docs/rfc        id title status owner date
-check_frontmatter docs/product    id title status owner date
-check_frontmatter docs/issues     id title status priority parent service owner date
-check_frontmatter docs/runbooks   id title service severity owner date
+check_frontmatter docs/adr         id title status owner date
+check_frontmatter docs/rfc         id title status owner date
+check_frontmatter docs/product     id title status owner date
+check_frontmatter docs/issues      id title status priority parent service owner date
+check_frontmatter docs/runbooks    id title service severity owner date
 check_frontmatter docs/postmortems id title status owner date
+check_frontmatter docs/domain      id title risk status owner date
 ok "Front-matter check completed."
 
 # ---------------------------------------------------------------------------
@@ -102,13 +111,14 @@ check_index_status() {
   [ -f "$index" ] || return 0
   while IFS= read -r f; do
     case "$(basename "$f")" in
-      _TEMPLATE.md|INDEX.md) continue ;;
+      _TEMPLATE.md|INDEX.md|AGENTS.md|README.md) continue ;;
     esac
     # CRLF-tolerant — strip \r so `grep -F "$id"` matches INDEX rows on Windows.
     id=$(awk -F': *' '/^id:/{print $2; exit}' "$f" | tr -d '\r')
     fm_status=$(awk -F': *' '/^status:/{print $2; exit}' "$f" | awk '{print $1}' | tr -d '\r')
     fm_owner=$(awk -F': *' '/^owner:/{print $2; exit}' "$f" | awk '{print $1}' | tr -d '\r')
     [ -z "$id" ] && continue
+    # Runbooks have no status: field — skip INDEX sync for them.
     if [ "$dir" = "docs/runbooks" ]; then
       continue
     fi
@@ -135,6 +145,7 @@ check_index_status docs/rfc
 check_index_status docs/product
 check_index_status docs/issues
 check_index_status docs/postmortems
+check_index_status docs/domain
 ok "INDEX status sync check completed."
 
 # ---------------------------------------------------------------------------

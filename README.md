@@ -103,13 +103,11 @@ CI is intentionally omitted — it depends on the toolchain you pick. Add `.gith
 2. **Bootstrap placeholders** — one command:
    ```bash
    bash scripts/bootstrap.sh my-project '@my-org/eng'
-   # or PowerShell:
-   pwsh scripts/bootstrap.ps1 -Project my-project -Owner '@my-org/eng'
    ```
    This rewrites `<project>` in `README.md` + `AGENTS.md`, replaces `@OWNER` in `.github/CODEOWNERS`, and fills the `owner:` line of `ADR-0001`.
-3. **Verify** — `bash scripts/verify.sh` (or `pwsh scripts/verify.ps1`). Should report `verify: OK`.
+3. **Verify** — `bash scripts/verify.sh`. Should report `verify: OK`.
 4. **Pick a toolchain** — add `package.json` / `*.sln` / `pyproject.toml` / etc. Update the Commands table in `AGENTS.md` to match.
-5. **Add CI** — create `.github/workflows/` for your toolchain (lint / typecheck / test, plus any gate you want for `infra/envs/prod/**`). Wire `scripts/verify.{sh,ps1}` as a CI step.
+5. **Add CI** — create `.github/workflows/` for your toolchain (lint / typecheck / test, plus any gate you want for `infra/envs/prod/**`). Wire `scripts/verify.sh` as a CI step.
 6. **Enable branch protection** on `main` (or your default branch) in GitHub repo settings:
    - **Require a pull request before merging**
    - **Require review from CODEOWNERS** ← without this, `CODEOWNERS` is documentation, not enforcement
@@ -117,7 +115,7 @@ CI is intentionally omitted — it depends on the toolchain you pick. Add `.gith
 7. **Write your first ADR** — record the toolchain choice as `ADR-0002`. (ADR-0001 is "we use ADRs"; ADR-0002 should be your stack.)
 8. **Ship.**
 
-After bootstrap, schedule a **quarterly audit**: `bash scripts/audit.sh` (or `pwsh scripts/audit.ps1`). It surfaces stale `proposed` ADRs, open postmortem action items, and CODEOWNERS handles to verify.
+After bootstrap, schedule a **quarterly audit**: `bash scripts/audit.sh`. It surfaces stale `proposed` ADRs, open postmortem action items, and CODEOWNERS handles to verify.
 
 ## Layout reference
 

@@ -65,8 +65,8 @@ Score buckets: low (0–40), mid (41–70), high (71–100).
   is picked.
 - `validate-pr-body.sh` is a content check, not a semantic one — it
   cannot tell *whether* the cited domain doc is actually relevant.
-- No CI wiring yet for `validate-pr-body.{sh,ps1}` or
-  `eval-agent-operability.{sh,ps1}`; all four are local pre-PR checks today.
+- No CI wiring yet for `validate-pr-body.sh` or
+  `eval-agent-operability.sh`; both are local pre-PR checks today.
 - Tenant / pricing / permission domain docs are seeds; real products
   will need many more, and the worked-example routes in
   `context-map.yml` (`services/**/billing/**`, `services/**/auth/**`)

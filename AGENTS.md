@@ -107,7 +107,7 @@ Need explicit driver/input/output per stage (multi-team coordination, regulated,
 
 Run before declaring done. Halt at the first ✗ and surface it to the user.
 
-> **Mechanical pre-check** — run `bash scripts/verify.sh` (or `pwsh scripts/verify.ps1`) first. It automates: placeholder cleanup (`@OWNER` / `<project>`), front-matter completeness, INDEX status sync, no leaked `.env*`, and the "sub-tree AGENTS.md stays smaller than root" delta sanity. The remaining items below are judgment calls; verify them manually.
+> **Mechanical pre-check** — run `bash scripts/verify.sh` first. It automates: placeholder cleanup (`@OWNER` / `<project>`), front-matter completeness, INDEX status sync, no leaked `.env*`, and the "sub-tree AGENTS.md stays smaller than root" delta sanity. The remaining items below are judgment calls; verify them manually.
 
 - [ ] Read nearest `AGENTS.md` for every **subtree** touched (top-most ancestor that has one — not every individual file).
 - [ ] Change class identified; required artifact (PRD/RFC/ADR) exists or task halted at § Lifecycle threshold.

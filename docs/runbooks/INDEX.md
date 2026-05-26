@@ -1,5 +1,4 @@
 # Runbook Index
 
-| ID | Title | Service | Severity | Last drill |
-|----|-------|---------|----------|-----------|
-| _empty_ | | | | |
+| Id | Title | Service | Severity | Last Drill |
+|---|---|---|---|---|
